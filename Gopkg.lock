@@ -81,6 +81,14 @@
   revision = "3a771d992973f24aa725d07868b467d1ddfceafb"
 
 [[projects]]
+  digest = "1:0f98f59e9a2f4070d66f0c9c39561f68fcd1dc837b22a852d28d0003aebd1b1e"
+  name = "github.com/boltdb/bolt"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "2f1ce7a837dcb8da3ec595b1dac9d0632f0f99e8"
+  version = "v1.3.1"
+
+[[projects]]
   branch = "master"
   digest = "1:2c00f064ba355903866cbfbf3f7f4c0fe64af6638cc7d1b8bdcf3181bc67f1d8"
   name = "github.com/btcsuite/btcd"
@@ -182,6 +190,23 @@
   version = "v1.38.2"
 
 [[projects]]
+  digest = "1:34a9a60fade37f8009ed4a19e02924198aba3eabfcc120ee5c6002b7de17212d"
+  name = "github.com/go-redis/redis"
+  packages = [
+    ".",
+    "internal",
+    "internal/consistenthash",
+    "internal/hashtag",
+    "internal/pool",
+    "internal/proto",
+    "internal/singleflight",
+    "internal/util",
+  ]
+  pruneopts = "UT"
+  revision = "b3d9bf10f6666b2ee5100a6f3f84f4caf3b4e37d"
+  version = "v6.14.2"
+
+[[projects]]
   digest = "1:2537bea8e6a4a90946bcd145cbdbd6f54d2dc263b3dee0ad96894e555a474f8b"
   name = "github.com/gogo/protobuf"
   packages = [
@@ -190,6 +215,14 @@
   ]
   pruneopts = "UT"
   revision = "636bf0302bc95575d69441b25a2603156ffdddf1"
+  version = "v1.1.1"
+
+[[projects]]
+  digest = "1:bc38c7c481812e178d85160472e231c5e1c9a7f5845d67e23ee4e706933c10d8"
+  name = "github.com/golang/mock"
+  packages = ["gomock"]
+  pruneopts = "UT"
+  revision = "c34cdb4725f4c3844d095133c6e40e448b86589b"
   version = "v1.1.1"
 
 [[projects]]
@@ -1044,12 +1077,31 @@
   version = "v1.0.6"
 
 [[projects]]
+  branch = "master"
+  digest = "1:463b8b9575e156d85d7dad70dcc2f46beaf7f3768637c2cfdd292cbe3d458d45"
+  name = "github.com/spacemonkeygo/monotime"
+  packages = [
+    ".",
+    "_cgo",
+  ]
+  pruneopts = "UT"
+  revision = "e3f48a95f98a18c3a2388f616480ec98ff5ba8e3"
+
+[[projects]]
   digest = "1:919bb3aa6d9d0b67648c219fa4925312bc3c2872da19e818fa769e9c97a2b643"
   name = "github.com/spaolacci/murmur3"
   packages = ["."]
   pruneopts = "UT"
   revision = "9f5d223c60793748f04a9d5b4b4eacddfc1f755d"
   version = "v1.1"
+
+[[projects]]
+  branch = "master"
+  digest = "1:b581c41154933bc9ad3f0fbbbc23eec323e42d484d73344942444a7d6faf267c"
+  name = "github.com/storj/storj"
+  packages = ["pkg/overlay"]
+  pruneopts = "UT"
+  revision = "c765dd98ded6e5c84fac06ff2f2a65387620a7b5"
 
 [[projects]]
   branch = "master"
@@ -1172,12 +1224,51 @@
   revision = "cb29a700b01dc3c2fdd743c00cf54685056bb62a"
 
 [[projects]]
+  digest = "1:cb7e5574de8e45ab0fc660c562aa6db43fdff4896190bc70069213cb19f39eaf"
+  name = "github.com/zeebo/errs"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "631dbed224b5670a1e8adc5f60fc4b7fc1680d70"
+  version = "v1.0.0"
+
+[[projects]]
   branch = "master"
   digest = "1:6b5a4150d244cc9966fcf654c8354c96827786bb5b59cc09604cd0c566e35b02"
   name = "github.com/zsais/go-gin-prometheus"
   packages = ["."]
   pruneopts = "UT"
   revision = "f09dfa9cedec6f3e4ed39e49cceeda09cbed464f"
+
+[[projects]]
+  digest = "1:3c1a69cdae3501bf75e76d0d86dc6f2b0a7421bc205c0cb7b96b19eed464a34d"
+  name = "go.uber.org/atomic"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "1ea20fb1cbb1cc08cbd0d913a96dead89aa18289"
+  version = "v1.3.2"
+
+[[projects]]
+  digest = "1:60bf2a5e347af463c42ed31a493d817f8a72f102543060ed992754e689805d1a"
+  name = "go.uber.org/multierr"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "3c4937480c32f4c13a875a1829af76c98ca3d40a"
+  version = "v1.1.0"
+
+[[projects]]
+  digest = "1:c52caf7bd44f92e54627a31b85baf06a68333a196b3d8d241480a774733dcf8b"
+  name = "go.uber.org/zap"
+  packages = [
+    ".",
+    "buffer",
+    "internal/bufferpool",
+    "internal/color",
+    "internal/exit",
+    "zapcore",
+  ]
+  pruneopts = "UT"
+  revision = "ff33455a0e382e8a81d14dd7c922020b6b5e7982"
+  version = "v1.9.1"
 
 [[projects]]
   branch = "master"
@@ -1325,12 +1416,42 @@
   version = "v8.18.2"
 
 [[projects]]
+  branch = "v2"
+  digest = "1:eb7e8ae226ee30b63ec2db60d4b351211c2d39fff2df0862fb09e210841ab647"
+  name = "gopkg.in/spacemonkeygo/monkit.v2"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "6ebf5a752f9bed322bcf6f9b24d3fa12e7800b1a"
+
+[[projects]]
   digest = "1:342378ac4dcb378a5448dd723f0784ae519383532f5e70ade24132c4c8693202"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   pruneopts = "UT"
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
   version = "v2.2.1"
+
+[[projects]]
+  branch = "master"
+  digest = "1:2f7f6e0aace44f8055d97aa3ec94938851a4f10bbc0f7fb6575d78656bb03155"
+  name = "storj.io/storj"
+  packages = [
+    "pkg/dht",
+    "pkg/kademlia",
+    "pkg/node",
+    "pkg/pb",
+    "pkg/peertls",
+    "pkg/provider",
+    "pkg/storj",
+    "pkg/transport",
+    "pkg/utils",
+    "storage",
+    "storage/boltdb",
+    "storage/redis",
+    "storage/storelogger",
+  ]
+  pruneopts = "UT"
+  revision = "c765dd98ded6e5c84fac06ff2f2a65387620a7b5"
 
 [solve-meta]
   analyzer-name = "dep"
@@ -1373,10 +1494,12 @@
     "github.com/sendgrid/sendgrid-go",
     "github.com/sendgrid/sendgrid-go/helpers/mail",
     "github.com/sirupsen/logrus",
+    "github.com/storj/storj/pkg/overlay",
     "github.com/streadway/amqp",
     "github.com/zsais/go-gin-prometheus",
     "golang.org/x/crypto/bcrypt",
     "google.golang.org/grpc",
+    "storj.io/storj/pkg/pb",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
