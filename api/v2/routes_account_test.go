@@ -207,12 +207,13 @@ func Test_API_Routes_Account(t *testing.T) {
 		t.Fatal("bad api status code from /api/v2/account/key/ipfs/new")
 	}
 	// manually create the keys since we arent using queues
-	if err = um.AddIPFSKeyForUser("testuser", "key1", "muchwow"); err != nil {
+	if err = um.AddIPFSKeyForUser("testuser", "testuser-key1", "muchwow"); err != nil {
 		t.Fatal(err)
 	}
-	if err = um.AddIPFSKeyForUser("testuser", "key2", "suchkey"); err != nil {
+	if err = um.AddIPFSKeyForUser("testuser", "testuser-key2", "suchkey"); err != nil {
 		t.Fatal(err)
 	}
+
 	// create ipfs keys - already used key name
 	// /api/v2/account/key/ipfs/new
 	urlValues = url.Values{}
@@ -221,7 +222,7 @@ func Test_API_Routes_Account(t *testing.T) {
 	urlValues.Add("key_name", "key1")
 	apiResp = apiResponse{}
 	if err := sendRequest(
-		api, "POST", "/api/v2/account/key/ipfs/new", 400, nil, urlValues, &apiResp,
+		api, "POST", "/api/v2/account/key/ipfs/new", 409, nil, urlValues, &apiResp,
 	); err != nil {
 		t.Fatal(err)
 	}
@@ -274,10 +275,6 @@ func Test_API_Routes_Account(t *testing.T) {
 	); err != nil {
 		t.Fatal(err)
 	}
-	// validate the response code
-	if apiResp.Code != 200 {
-		t.Fatal("bad api status code from /api/v2/forgot/username")
-	}
 
 	// test@email.com
 	// forgot username
@@ -299,7 +296,7 @@ func Test_API_Routes_Account(t *testing.T) {
 	// /api/v2/forgot/password
 	apiResp = apiResponse{}
 	if err := sendRequest(
-		api, "POST", "/api/v2/forgot/password", 200, nil, nil, &apiResp,
+		api, "POST", "/api/v2/forgot/password", 400, nil, nil, &apiResp,
 	); err != nil {
 		t.Fatal(err)
 	}
