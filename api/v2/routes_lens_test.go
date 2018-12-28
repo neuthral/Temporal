@@ -31,11 +31,22 @@ func Test_API_Routes_Lens(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// test lens index - missing post form
+	// test lens index - missing object_identifier
 	// /api/v2/lens/index
 	var apiResp apiResponse
 	urlValues := url.Values{}
 	urlValues.Add("object_type", "ipld")
+	if err := sendRequest(
+		api, "POST", "/api/v2/lens/index", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test lens index - missing object_type
+	// /api/v2/lens/index
+	apiResp = apiResponse{}
+	urlValues = url.Values{}
+	urlValues.Add("object_identifier", hash)
 	if err := sendRequest(
 		api, "POST", "/api/v2/lens/index", 400, nil, urlValues, &apiResp,
 	); err != nil {

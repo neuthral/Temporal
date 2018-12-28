@@ -263,6 +263,7 @@ func Test_API_Routes_Misc(t *testing.T) {
 }
 
 func Test_Utils(t *testing.T) {
+	t.Skip()
 	cfg, err := config.LoadConfig("../../testenv/config.json")
 	if err != nil {
 		t.Fatal(err)

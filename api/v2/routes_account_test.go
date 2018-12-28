@@ -68,7 +68,16 @@ func Test_API_Routes_Account(t *testing.T) {
 		t.Fatal("failed to set email verification token")
 	}
 
-	// verify the email verification token
+	// verify the email verification token - failure
+	// /api/v2/account/email/token/verify
+	apiResp = apiResponse{}
+	if err := sendRequest(
+		api, "POST", "/api/v2/account/email/token/verify", 400, nil, nil, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// verify the email verification token - success
 	// /api/v2/account/email/token/verify
 	urlValues := url.Values{}
 	urlValues.Add("token", user.EmailVerificationToken)
@@ -90,6 +99,28 @@ func Test_API_Routes_Account(t *testing.T) {
 		t.Fatal("failed to enable email address")
 	}
 
+	// verify account password change - missing new_password
+	// /api/v2/account/password/change
+	urlValues = url.Values{}
+	urlValues.Add("old_password", "admin")
+	apiResp = apiResponse{}
+	if err := sendRequest(
+		api, "POST", "/api/v2/account/password/change", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// verify account password change - missing old_passowrd
+	// /api/v2/account/password/change
+	urlValues = url.Values{}
+	urlValues.Add("new_password", "admin1234@")
+	apiResp = apiResponse{}
+	if err := sendRequest(
+		api, "POST", "/api/v2/account/password/change", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
 	// verify account password change
 	// /api/v2/account/password/change
 	urlValues = url.Values{}
@@ -104,6 +135,42 @@ func Test_API_Routes_Account(t *testing.T) {
 	// validate the response code
 	if apiResp.Code != 200 {
 		t.Fatal("bad api status code from /api/v2/account/password/change")
+	}
+
+	// create ipfs keys - missing key_type
+	// /api/v2/account/key/ipfs/new
+	urlValues = url.Values{}
+	urlValues.Add("key_bits", "256")
+	urlValues.Add("key_name", "key1")
+	apiResp = apiResponse{}
+	if err := sendRequest(
+		api, "POST", "/api/v2/account/key/ipfs/new", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// create ipfs keys - missing key_bits
+	// /api/v2/account/key/ipfs/new
+	urlValues = url.Values{}
+	urlValues.Add("key_type", "ed25519")
+	urlValues.Add("key_name", "key1")
+	apiResp = apiResponse{}
+	if err := sendRequest(
+		api, "POST", "/api/v2/account/key/ipfs/new", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// create ipfs keys - missing key_name
+	// /api/v2/account/key/ipfs/new
+	urlValues = url.Values{}
+	urlValues.Add("key_type", "ed25519")
+	urlValues.Add("key_bits", "256")
+	apiResp = apiResponse{}
+	if err := sendRequest(
+		api, "POST", "/api/v2/account/key/ipfs/new", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
 	}
 
 	// create ipfs keys
@@ -144,6 +211,18 @@ func Test_API_Routes_Account(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err = um.AddIPFSKeyForUser("testuser", "key2", "suchkey"); err != nil {
+		t.Fatal(err)
+	}
+	// create ipfs keys - already used key name
+	// /api/v2/account/key/ipfs/new
+	urlValues = url.Values{}
+	urlValues.Add("key_type", "ed25519")
+	urlValues.Add("key_bits", "256")
+	urlValues.Add("key_name", "key1")
+	apiResp = apiResponse{}
+	if err := sendRequest(
+		api, "POST", "/api/v2/account/key/ipfs/new", 400, nil, urlValues, &apiResp,
+	); err != nil {
 		t.Fatal(err)
 	}
 
@@ -187,6 +266,20 @@ func Test_API_Routes_Account(t *testing.T) {
 	}
 
 	// test@email.com
+	// forgot username - missing email_address
+	// /api/v2/forgot/username
+	apiResp = apiResponse{}
+	if err := sendRequest(
+		api, "POST", "/api/v2/forgot/username", 400, nil, nil, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+	// validate the response code
+	if apiResp.Code != 200 {
+		t.Fatal("bad api status code from /api/v2/forgot/username")
+	}
+
+	// test@email.com
 	// forgot username
 	// /api/v2/forgot/username
 	apiResp = apiResponse{}
@@ -200,6 +293,15 @@ func Test_API_Routes_Account(t *testing.T) {
 	// validate the response code
 	if apiResp.Code != 200 {
 		t.Fatal("bad api status code from /api/v2/forgot/username")
+	}
+
+	// forgot password - missing email_address
+	// /api/v2/forgot/password
+	apiResp = apiResponse{}
+	if err := sendRequest(
+		api, "POST", "/api/v2/forgot/password", 200, nil, nil, &apiResp,
+	); err != nil {
+		t.Fatal(err)
 	}
 
 	// test@email.com

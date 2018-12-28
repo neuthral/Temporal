@@ -29,7 +29,15 @@ func Test_API_Routes_Cluster(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// test cluster pin
+	// test cluster pin - failure missing hold_time
+	// /api/v2/ipfs/cluster/pin
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipfs/cluster/pin/"+hash, 400, nil, nil, nil,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test cluster pin - success
 	// /api/v2/ipfs/cluster/pin
 	var apiResp apiResponse
 	urlValues := url.Values{}

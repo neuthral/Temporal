@@ -529,7 +529,7 @@ func (api *API) setupRoutes() error {
 	database := v2.Group("/database", authware...)
 	{
 		database.GET("/uploads", api.getUploadsForUser)
-		database.GET("/uploads/encrypted", api.getEncryptedUploadsForUser)
+		database.GET("/uploads/encrypted/:networkName", api.getEncryptedUploadsForUser)
 	}
 
 	// frontend

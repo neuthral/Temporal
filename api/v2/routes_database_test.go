@@ -41,10 +41,18 @@ func Test_API_Routes_Database(t *testing.T) {
 		t.Fatal("bad api status code from api/v2/database/uploads")
 	}
 
-	// test get encrypted uploads
+	// test get encrypted uploads - no network
 	// /api/v2/frontend/uploads/encrypted
 	if err := sendRequest(
 		api, "GET", "/api/v2/database/uploads/encrypted", 200, nil, nil, nil,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test get encrypted uploads - with network
+	// /api/v2/frontend/uploads/encrypted
+	if err := sendRequest(
+		api, "GET", "/api/v2/database/uploads/encrypted/testNetwork", 200, nil, nil, nil,
 	); err != nil {
 		t.Fatal(err)
 	}

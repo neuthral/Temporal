@@ -45,10 +45,80 @@ func Test_API_Routes_IPNS(t *testing.T) {
 		t.Fatal("bad http status code from /api/v2/ipns/records")
 	}
 
-	// test ipns publishing (public) - bad hash
+	// test ipns publishing (public) - missing hash
 	// /api/v2/ipns/public/publish/details
 	var apiResp apiResponse
 	urlValues := url.Values{}
+	urlValues.Add("life_time", "24h")
+	urlValues.Add("ttl", "1h")
+	urlValues.Add("key", "mytestkey")
+	urlValues.Add("resolve", "true")
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipns/public/publish/details", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test ipns publishing (public) - missing life_time
+	// /api/v2/ipns/public/publish/details
+	apiResp = apiResponse{}
+	urlValues = url.Values{}
+	urlValues.Add("hash", "notavalidipfshash")
+	urlValues.Add("ttl", "1h")
+	urlValues.Add("key", "mytestkey")
+	urlValues.Add("resolve", "true")
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipns/public/publish/details", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test ipns publishing (public) - missing ttl
+	// /api/v2/ipns/public/publish/details
+	apiResp = apiResponse{}
+	urlValues = url.Values{}
+	urlValues.Add("hash", "notavalidipfshash")
+	urlValues.Add("life_time", "24h")
+	urlValues.Add("key", "mytestkey")
+	urlValues.Add("resolve", "true")
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipns/public/publish/details", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test ipns publishing (public) - missing key
+	// /api/v2/ipns/public/publish/details
+	apiResp = apiResponse{}
+	urlValues = url.Values{}
+	urlValues.Add("hash", "notavalidipfshash")
+	urlValues.Add("life_time", "24h")
+	urlValues.Add("ttl", "1h")
+	urlValues.Add("resolve", "true")
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipns/public/publish/details", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test ipns publishing (public) - missing resolve
+	// /api/v2/ipns/public/publish/details
+	apiResp = apiResponse{}
+	urlValues = url.Values{}
+	urlValues.Add("hash", "notavalidipfshash")
+	urlValues.Add("life_time", "24h")
+	urlValues.Add("ttl", "1h")
+	urlValues.Add("key", "mytestkey")
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipns/public/publish/details", 400, nil, urlValues, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test ipns publishing (public) - bad hash
+	// /api/v2/ipns/public/publish/details
+	apiResp = apiResponse{}
+	urlValues = url.Values{}
 	urlValues.Add("hash", "notavalidipfshash")
 	urlValues.Add("life_time", "24h")
 	urlValues.Add("ttl", "1h")

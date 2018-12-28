@@ -121,6 +121,15 @@ func Test_API_Routes_IPFS_Public(t *testing.T) {
 		t.Fatal("bad api status code from /api/v2/ipfs/public/file/add/advanced")
 	}
 
+	// test pinning - missing hold_time
+	// /api/v2/ipfs/public/pin
+	apiResp = apiResponse{}
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipfs/public/pin/"+hash, 400, nil, nil, &apiResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
 	// test pinning
 	// /api/v2/ipfs/public/pin
 	apiResp = apiResponse{}
@@ -136,11 +145,20 @@ func Test_API_Routes_IPFS_Public(t *testing.T) {
 		t.Fatal("bad api status code from  /api/v2/ipfs/public/pin")
 	}
 
+	// test pubsub publish - missing message
+	// /api/v2/ipfs/pubsub/publish/topic
+	var mapAPIResp mapAPIResponse
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipfs/public/pubsub/publish/foo", 400, nil, nil, &mapAPIResp,
+	); err != nil {
+		t.Fatal(err)
+	}
+
 	// test pubsub publish
 	// /api/v2/ipfs/pubsub/publish/topic
 	urlValues = url.Values{}
 	urlValues.Add("message", "bar")
-	var mapAPIResp mapAPIResponse
+	mapAPIResp = mapAPIResponse{}
 	if err := sendRequest(
 		api, "POST", "/api/v2/ipfs/public/pubsub/publish/foo", 200, nil, urlValues, &mapAPIResp,
 	); err != nil {
@@ -189,13 +207,57 @@ func Test_API_Routes_IPFS_Public(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// test public network beam
+	// test public network beam - missing source_network
+	// /api/v2/ipfs/utils/laser/beam
+	urlValues = url.Values{}
+	urlValues.Add("source_network", "public")
+	urlValues.Add("content_hash", hash)
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipfs/utils/laser/beam", 400, nil, urlValues, nil,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test public network beam - missing destination_network
+	// /api/v2/ipfs/utils/laser/beam
+	urlValues = url.Values{}
+	urlValues.Add("source_network", "public")
+	urlValues.Add("content_hash", hash)
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipfs/utils/laser/beam", 400, nil, urlValues, nil,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test public network beam - missing content_hash
+	// /api/v2/ipfs/utils/laser/beam
+	urlValues = url.Values{}
+	urlValues.Add("source_network", "public")
+	urlValues.Add("destination_network", "public")
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipfs/utils/laser/beam", 400, nil, urlValues, nil,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test public network beam - no passphrase
 	// /api/v2/ipfs/utils/laser/beam
 	urlValues = url.Values{}
 	urlValues.Add("source_network", "public")
 	urlValues.Add("destination_network", "public")
 	urlValues.Add("content_hash", hash)
-	urlValues.Add("passphrase", "password123")
+	if err := sendRequest(
+		api, "POST", "/api/v2/ipfs/utils/laser/beam", 200, nil, urlValues, nil,
+	); err != nil {
+		t.Fatal(err)
+	}
+
+	// test public network beam - with passphrase
+	// /api/v2/ipfs/utils/laser/beam
+	urlValues = url.Values{}
+	urlValues.Add("source_network", "public")
+	urlValues.Add("destination_network", "public")
+	urlValues.Add("content_hash", hash)
 	if err := sendRequest(
 		api, "POST", "/api/v2/ipfs/utils/laser/beam", 200, nil, urlValues, nil,
 	); err != nil {
